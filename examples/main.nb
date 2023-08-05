@@ -1,0 +1,6 @@
+main = do
+    print("Hello")
+    print(True)
+    print(15)
+    print(["Hello ",15,True," world!"])
+end
