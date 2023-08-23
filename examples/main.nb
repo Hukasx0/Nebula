@@ -1,4 +1,13 @@
 main = do
+
+    case Just "hello!" of
+        Just    =>  print("hello! does exist")
+        Nothing =>  print("hello! disappeared for some reason")
+
+    case Nothing of
+        Just    =>  print("How did that happen?")
+        Nothing =>  print("Nothing does not exist")
+
     print("Hello")
     print(True)
     print(15+32)
