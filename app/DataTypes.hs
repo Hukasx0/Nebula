@@ -3,9 +3,16 @@ module DataTypes where
 import Text.Parsec
 import Text.Parsec.String
 
-data Value = Str String | Number Int | Boolean Bool | Array [Value] | Math Value String Value | Logic Value String Value | Nothingg () | Justt Value |
-            Maybee Value
+data Value = Str String | Number Int | Boolean Bool | Array [Value] | Nothingg () | Justt Value | Maybee Value | Func String Type Value
+            | Math Value String Value | Logic Value String Value | DoEnd [BuiltInFunction]
 
+data Type = IntT () | StringT () | BooleanT () | Void () | ArrayT Type | MaybeT Type
+
+data BuiltInFunction = Main Value | Case Value BuiltInFunction BuiltInFunction | DefFun String Type Value | Print Value
+
+typesParser :: Parser Type
+typesParser = (IntT <$>  (spaces <* string "Int")) <|> (StringT <$> (spaces <* string "String")) <|> (BooleanT <$> (spaces <* string "Boolean")) <|> (Void <$> (spaces <* string "Void"))
+              <|> (ArrayT <$> (char '[' >> spaces >> typesParser <* spaces <* char ']')) <|> (MaybeT <$> (string "Maybe" >> many1 space >> typesParser))
 
 stringParser :: Parser Value
 stringParser = Str <$> (char '"' >> many1 (noneOf "\"") <* char '"')

@@ -39,7 +39,8 @@ executeLogic val1 "xor" val2 = show $ (val1 `xor` val2)
 executeLogic _ _ _ = ""
 
 executeCode :: BuiltInFunction -> IO ()
-executeCode (Main code) = mapM_ (executeCode) code 
+executeCode (Main (DoEnd code)) = mapM_ (executeCode) code 
 executeCode (Print v) = putStrLn $ (executeValue $ v)
 executeCode (Case (Maybee (Justt val)) code _) = executeCode $ code
 executeCode (Case (Maybee (Nothingg _)) _ code) = executeCode $ code
+executeCode _ = error $ ""
